@@ -35,14 +35,19 @@ const useStyles = makeStyles( () => ({
 }));
 
 const NewStudentView = (props) => {
-  const {handleChange, handleSubmit } = props;
+  const {handleChange, handleSubmit, error } = props;
   const classes = useStyles();
 
   // Render a New Student view with an input form
   return (
     <div>
       <h1>New Student</h1>
-
+      { error ? <p style={{color: 'red'}}>An error has occurred maybe due to the input fields being wrong or the server being down.
+        <br />
+        Please check and try again.
+      </p> :
+      ""}
+      
       <div className={classes.root}>
         <div className={classes.formContainer}>
           <div className={classes.formTitle}>
@@ -63,6 +68,21 @@ const NewStudentView = (props) => {
 
             <label style={{color:'#11153e', fontWeight: 'bold'}}>Campus Id: </label>
             <input type="text" name="campusId" onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Email: </label>
+            <input type="text" name="email" onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Image Url: </label>
+            <input type="text" name="imageUrl" onChange={(e) => handleChange(e)} />
+            <br/>
+            <br/>
+
+            <label style={{color:'#11153e', fontWeight: 'bold'}}>Gpa: </label>
+            <input type="text" name="gpa" onChange={(e) => handleChange(e)} />
             <br/>
             <br/>
 
