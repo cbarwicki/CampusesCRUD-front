@@ -29,8 +29,11 @@ const AllStudentsView = (props) => {
           let name = student.firstname + " " + student.lastname;
           return (
             <div key={student.id}>
-              <Link to={`/student/${student.id}`}>
+              <Link to={`/students/${student.id}`}>
                 <h2>{name}</h2>
+              </Link>
+              <Link to={`/editStudent/${student.id}`}>
+                <button>Edit</button>
               </Link>
               <button onClick={() => deleteStudent(student.id)}>Delete</button>
               <hr/>

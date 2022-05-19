@@ -20,9 +20,13 @@ class NewStudentContainer extends Component {
     this.state = {
       firstname: "", 
       lastname: "", 
-      campusId: null, 
+      campusId: null,
+      email: "",
+      imageUrl: "",
+      gpa: 0,
       redirect: false, 
-      redirectId: null
+      redirectId: null,
+      error: false
     };
   }
 
@@ -40,20 +44,35 @@ class NewStudentContainer extends Component {
     let student = {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
-        campusId: this.state.campusId
+        campusId: this.state.campusId,
+        email: this.state.email,
+        imageUrl: this.state.imageUrl,
+        gpa: this.state.gpa
     };
     
     // Add new student in back-end database
     let newStudent = await this.props.addStudent(student);
 
+    console.log(newStudent);
+
     // Update state, and trigger redirect to show the new student
+    if(newStudent !== undefined)
     this.setState({
       firstname: "", 
       lastname: "", 
-      campusId: null, 
+      campusId: null,
+      email: "",
+      imageUrl: "",
+      gpa: 0,
       redirect: true, 
-      redirectId: newStudent.id
+      redirectId: newStudent.id,
+      error: false
     });
+    else // error handling in case api falls due to wrong input
+    this.setState(prevState => ({
+      ...prevState,
+      error: true
+    }))
   }
 
   // Unmount when the component is being removed from the DOM:
@@ -65,7 +84,7 @@ class NewStudentContainer extends Component {
   render() {
     // Redirect to new student's page after submit
     if(this.state.redirect) {
-      return (<Redirect to={`/student/${this.state.redirectId}`}/>)
+      return (<Redirect to={`/students/${this.state.redirectId}`}/>)
     }
 
     // Display the input form via the corresponding View component
@@ -75,6 +94,7 @@ class NewStudentContainer extends Component {
         <NewStudentView 
           handleChange = {this.handleChange} 
           handleSubmit={this.handleSubmit}      
+          error={this.state.error}
         />
       </div>          
     );
